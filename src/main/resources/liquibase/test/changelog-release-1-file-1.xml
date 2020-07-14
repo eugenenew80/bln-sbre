@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="apps-test-eug-1" logicalFilePath="path-independent" author="eugene" >
+        <comment>Creating table: bems_operations</comment>
+        <createTable tableName="bems_operations" schemaName="apps" remarks="Операции в системе СБРЭ">
+            <column name="code" type="varchar(10)" remarks="Код">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="name" type="varchar(30)" remarks="Наименование">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="apps-test-eug-2" logicalFilePath="path-independent" author="eugene" >
+        <comment>Creating table: bems_schedules_errors</comment>
+        <createTable tableName="bems_schedules_errors" schemaName="apps" remarks="Коды ошибок загрузки графиков нагрузки в СБРЭ">
+            <column name="code" type="varchar(30)" remarks="Код">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="name" type="varchar(100)" remarks="Наименование">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="apps-test-eug-3" logicalFilePath="path-independent" author="eugene" >
+        <comment>Creating table: res_ds_lines_interface</comment>
+        <createTable tableName="res_ds_lines_interface" schemaName="apps" remarks="Графики покупки и продажи для передачи в СБРЭ">
+            <column name="id" type="number" remarks="Идентификатор">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="ds_line_id" type="number" remarks="Идентификатор строки графика покупки или продажи">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="plan_date" type="date" remarks="Дата графика">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="sender" type="varchar(30)" remarks="Отправитель">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="partner" type="varchar(30)" remarks="Получатель">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="operation_code" type="varchar(10)" defaultValue="BUY" remarks="Код операции">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="status" type="varchar(20)" remarks="Статус передачи в СБРЭ">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="error_code" type="varchar(30)" remarks="Код ошибки в СБРЭ">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="bems_plan_id" type="number" remarks="Идентификатор созданного графика в СБРЭ">
+                <constraints nullable="true" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="apps-test-eug-4" logicalFilePath="path-independent" author="eugene" >
+        <comment>Insert data into table bems_operations</comment>
+        <insert schemaName="apps" tableName="bems_operations">
+            <column name="code">BUY</column>
+            <column name="name">Покупка</column>
+        </insert>
+
+        <insert schemaName="apps" tableName="bems_operations">
+            <column name="code">SELL</column>
+            <column name="name">Продажа</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="apps-test-eug-5" logicalFilePath="path-independent" author="eugene" >
+        <comment>Insert data into table bems_schedules_errors</comment>
+        <insert schemaName="apps" tableName="bems_schedules_errors">
+            <column name="code">PLAN_SENDER_ERROR</column>
+            <column name="name">Необходимо указать отправителя плана</column>
+        </insert>
+
+        <insert schemaName="apps" tableName="bems_schedules_errors">
+            <column name="code">PLAN_PARTNER_ERROR</column>
+            <column name="name">Необходимо указать контрагента плана</column>
+        </insert>
+
+        <insert schemaName="apps" tableName="bems_schedules_errors">
+            <column name="code">PLAN_OPERATION_ERROR</column>
+            <column name="name">Необходимо указать вид операции плана</column>
+        </insert>
+
+        <insert schemaName="apps" tableName="bems_schedules_errors">
+            <column name="code">PLAN_DATE_ERROR</column>
+            <column name="name">Дата подаваемого плана должна быть больше текущей даты</column>
+        </insert>
+
+        <insert schemaName="apps" tableName="bems_schedules_errors">
+            <column name="code">PLAN_ADD_ERROR</column>
+            <column name="name">Ошибка сохранения заявки. Пожалуйста, убедитесь, что все поля заполнены верно</column>
+        </insert>
+
+        <insert schemaName="apps" tableName="bems_schedules_errors">
+            <column name="code">PLAN_DUPLICATE_ERROR</column>
+            <column name="name">Заявка является дубликатом</column>
+        </insert>
+
+        <insert schemaName="apps" tableName="bems_schedules_errors">
+            <column name="code">PLAN_NEGATIVE_AMOUNTS_ERROR</column>
+            <column name="name">Заявка содержит негативные значения энергии</column>
+        </insert>
+
+        <insert schemaName="apps" tableName="bems_schedules_errors">
+            <column name="code">PLAN_ZERO_AMOUNTS_ERROR</column>
+            <column name="name">Заявка не может быть полностью нулевой</column>
+        </insert>
+
+        <insert schemaName="apps" tableName="bems_schedules_errors">
+            <column name="code">PLAN_QUOTA_ERROR</column>
+            <column name="name">В заявке превышено значение почасовой межзональной квоты</column>
+        </insert>
+
+        <insert schemaName="apps" tableName="bems_schedules_errors">
+            <column name="code">ERROR_PLAN_NUMBER</column>
+            <column name="name">Порядковый номер ошибочной заявки</column>
+        </insert>
+
+        <insert schemaName="apps" tableName="bems_schedules_errors">
+            <column name="code">PLAN_SEND_TIME_LIMIT</column>
+            <column name="name">Закончилось время отправки планов на завтра</column>
+        </insert>
+
+        <insert schemaName="apps" tableName="bems_schedules_errors">
+            <column name="code">INTERNAL_SERVER_ERROR</column>
+            <column name="name">Неизвестная ошибка сервера</column>
+        </insert>
+    </changeSet>
+
+    <changeSet id="apps-test-eug-6" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table bems_operations</comment>
+        <addPrimaryKey
+            columnNames="code"
+            constraintName="pk_bems_operations"
+            schemaName="apps"
+            tableName="bems_operations"/>
+    </changeSet>
+
+    <changeSet id="apps-test-eug-7" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table bems_schedules_errors</comment>
+        <addPrimaryKey
+            columnNames="code"
+            constraintName="pk_bems_schedules_errors"
+            schemaName="apps"
+            tableName="bems_schedules_errors"/>
+    </changeSet>
+
+    <changeSet id="apps-test-eug-8" logicalFilePath="path-independent" author="eugene">
+        <comment>Creating primary key for table res_ds_lines_interface</comment>
+        <addPrimaryKey
+            columnNames="id"
+            constraintName="pk_res_ds_lines_interface"
+            schemaName="apps"
+            tableName="res_ds_lines_interface"/>
+    </changeSet>
+</databaseChangeLog>
