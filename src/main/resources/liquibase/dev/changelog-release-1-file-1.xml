@@ -281,4 +281,25 @@
             <column name="name">Неизвестная ошибка сервера</column>
         </insert>
     </changeSet>
+
+    <changeSet id="apps-test-pag-1" logicalFilePath="path-independent" author="andrey">
+        <comment>Adding columns to table res_ds_lines_interface</comment>
+        <addColumn schemaName= "apps" tableName="res_ds_lines_interface" >
+            <column name="create_by" type="number" remarks="Автор">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="create_date" type="timestamp" remarks="Дата создания">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_by" type="number" remarks="Автор изменения">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="last_update_date" type="timestamp" remarks="Дата изменения">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

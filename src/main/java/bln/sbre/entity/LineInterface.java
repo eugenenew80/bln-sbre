@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(of= {"id"})
@@ -52,4 +53,16 @@ public class LineInterface {
 
     @Column(name = "bems_plan_id")
     private Long externalId;
+
+    @Column(name = "create_by")
+    private Long createdBy;
+
+    @Column(name = "create_date")
+    private LocalDateTime createdDate;
+
+    @Column(name = "last_update_by")
+    private Long lastUpdatedBy;
+
+    @Column(name = "last_update_date")
+    private LocalDateTime lastUpdatedDate;
 }

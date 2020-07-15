@@ -18,6 +18,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import static java.util.Optional.*;
@@ -223,6 +225,7 @@ public class ScheduledTasks {
                 line.setStatus(response.getFirst());
                 line.setExternalId(planId);
                 line.setError(null);
+                line.setLastUpdatedDate(LocalDateTime.now());
                 lineInterfaceRepo.save(line);
             }
         }
@@ -269,6 +272,8 @@ public class ScheduledTasks {
         }
 
         line.setStatus(response.getFirst());
+        line.setLastUpdatedDate(LocalDateTime.now());
+
         if (!isEmpty(errorCode))
             line.setError(planErrorRepo.findOne(errorCode));
         lineInterfaceRepo.save(line);
