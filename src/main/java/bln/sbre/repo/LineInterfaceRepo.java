@@ -20,6 +20,6 @@ public interface LineInterfaceRepo extends JpaRepository<LineInterface, Long> {
 
     @Procedure(name = "LineInterface.updateStatuses")
     void updateStatuses(
-        @Param("header_id") Long headerId
+        @Param("p_header_id") Long headerId
     );
 }

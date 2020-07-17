@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
         name = "LineInterface.updateStatuses",
         procedureName = "bems_interface_pkg.update_statuses",
         parameters={
-            @StoredProcedureParameter(name="header_id", type=Long.class, mode=ParameterMode.IN),
+            @StoredProcedureParameter(name="p_header_id", type=Long.class, mode=ParameterMode.IN),
         }
     )
 })
